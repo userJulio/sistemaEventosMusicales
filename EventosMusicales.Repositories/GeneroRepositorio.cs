@@ -12,7 +12,7 @@ namespace EventosMusicales.Repositories
         private readonly List<Generos> listGeneros;
         public GeneroRepositorio()
         {
-            listGeneros=new List<Generos>();
+            listGeneros = new List<Generos>();
             listGeneros.Add(new Generos() { Id = 1, Name = "Salsa" });
             listGeneros.Add(new Generos() { Id = 2, Name = "Cumbia" });
             listGeneros.Add(new Generos() { Id = 3, Name = "Rock" });
@@ -26,31 +26,34 @@ namespace EventosMusicales.Repositories
 
         public Generos? GetGeneros(int id)
         {
-            var item= listGeneros.FirstOrDefault(x => x.Id == id);
+            // El ? puede devolver un objeto genero o un nulo.
+            var item = listGeneros.FirstOrDefault(x => x.Id == id);
             return item;
         }
         public Generos Add(Generos gener)
         {
             var lastItem = listGeneros.MaxBy(x => x.Id);
-            gener.Id = lastItem is null ? 1: lastItem.Id +1;
+            gener.Id = lastItem is null ? 1 : lastItem.Id + 1;
             listGeneros.Add(gener);
             return gener;
-
         }
         public void Update(int id, Generos genre)
         {
             var item = GetGeneros(id);
-            if(item is not null)
+            if (item is not null)
             {
                 item.Name = genre.Name;
                 item.Estado = genre.Estado;
+            }else
+            {
+               
             }
-            
+
         }
         public void Delete(int id)
         {
             var item = GetGeneros(id);
-            if(item is not null)
+            if (item is not null)
             {
                 listGeneros.Remove(item);
             }
