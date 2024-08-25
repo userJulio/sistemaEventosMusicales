@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosMusicales", "EventosMusicales\EventosMusicales.csproj", "{6A47DFDA-1948-4195-98B3-6A24BBCD5443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales", "EventosMusicales\EventosMusicales.csproj", "{6A47DFDA-1948-4195-98B3-6A24BBCD5443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosMusicales.Entities", "EventosMusicales.Entities\EventosMusicales.Entities.csproj", "{46A13BD9-9EDE-4F85-86B5-A1D887CCB500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales.Entities", "EventosMusicales.Entities\EventosMusicales.Entities.csproj", "{46A13BD9-9EDE-4F85-86B5-A1D887CCB500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosMusicales.Repositories", "EventosMusicales.Repositories\EventosMusicales.Repositories.csproj", "{2C3B232F-58E8-4E93-8B77-F39C280BE007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales.Repositories", "EventosMusicales.Repositories\EventosMusicales.Repositories.csproj", "{2C3B232F-58E8-4E93-8B77-F39C280BE007}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales.Persistence", "EventosMusicales.Persistence\EventosMusicales.Persistence.csproj", "{2F35359B-B94F-486C-9645-6216C860555A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosMusicales.Dto", "EventosMusicales.Dto\EventosMusicales.Dto.csproj", "{3F0A5E13-E91E-43C5-8716-8DA382539454}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{2C3B232F-58E8-4E93-8B77-F39C280BE007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C3B232F-58E8-4E93-8B77-F39C280BE007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C3B232F-58E8-4E93-8B77-F39C280BE007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F35359B-B94F-486C-9645-6216C860555A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F35359B-B94F-486C-9645-6216C860555A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F35359B-B94F-486C-9645-6216C860555A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F35359B-B94F-486C-9645-6216C860555A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,12 +15,12 @@ builder.Services.AddSwaggerGen();
 //Configruacion context and conection string
 builder.Services.AddDbContext<AplicactionDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 
 //Registrar Servicios del controlador
-builder.Services.AddSingleton<GeneroRepositorio>();
+builder.Services.AddTransient<IGeneroRepositorio,GeneroRepositorio>();
 
 
 var app = builder.Build();

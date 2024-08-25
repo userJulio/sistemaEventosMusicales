@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventosMusicales.Entities\EventosMusicales.Entities.csproj" />
+    <ProjectReference Include="..\EventosMusicales.Persistence\EventosMusicales.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

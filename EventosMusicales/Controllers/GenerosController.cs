@@ -1,6 +1,8 @@
-﻿using EventosMusicales.Entities;
+﻿using EventosMusicales.Dto.Response;
+using EventosMusicales.Entities;
 using EventosMusicales.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EventosMusicales.Controllers
 {
@@ -8,46 +10,119 @@ namespace EventosMusicales.Controllers
     [Route("api/generos")]
     public class GenerosController : ControllerBase
     {
-        private readonly GeneroRepositorio repositorio;
+        private readonly IGeneroRepositorio repositorio;
+        private readonly ILogger<GenerosController> logger;
 
-        public GenerosController(GeneroRepositorio repositorio)
+        public GenerosController(IGeneroRepositorio repositorio,ILogger<GenerosController> logger)
         {
             this.repositorio = repositorio;
+            this.logger = logger;
         }
 
         [HttpGet]
-        public ActionResult<List<Generos>> Get()
+        public async Task<IActionResult> Get()
         {
-            var data = repositorio.GetGeneros();
-            return Ok(data);
+
+            var response = new BaseResponseGeneric<IEnumerable<Generos>>();
+            try
+            {
+                response.data= await repositorio.GetGeneros();
+                response.Succes = true;
+                logger.LogInformation("Obteniendo todos los generos musicales");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                response.ErrorMessage = "Ocurriio un error al obtener la informacion de Generos";
+                logger.LogError($"{response.ErrorMessage} {ex.Message}");
+                return BadRequest(response);
+            }
+
         }
 
 
         [HttpGet("{idGenero:int}")]
-        public ActionResult<Generos> GetId(int idGenero)
+        public async Task<IActionResult> GetId(int idGenero)
         {
-            var genero = repositorio.GetGeneros(idGenero);
-            return genero is not null ? Ok(genero) : NotFound();
+            var response =new BaseResponseGeneric<Generos>();
+
+            try
+            {
+                response.data= await repositorio.GetGeneros(idGenero);
+                response.Succes = true;
+                logger.LogInformation($"Obtener el genero musical con el id : {idGenero}");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = "Ocurrio un error para obtener la informacion de generos";
+                logger.LogError($"{response.ErrorMessage} {ex.Message} ");
+                return BadRequest(response);
+                
+            }
         }
 
         [HttpPost]
-        public ActionResult<Generos> Agregar(Generos genero)
+        public async Task<IActionResult> Agregar(Generos genero)
         {
-            repositorio.Add(genero);
-            return Ok(genero);
+            var response = new BaseResponseGeneric<int>();
+
+            try
+            {
+               response.data= await repositorio.Add(genero);
+                response.Succes = true;
+                logger.LogInformation($"Genero musical inserta correctamente con el id : {response.data}");
+                //return Ok(response);
+                return StatusCode((int)HttpStatusCode.Created, response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = "Ocurrio un problema al agregar un nuevo registro en Generos";
+                logger.LogError($"{response.ErrorMessage} - {ex.Message}");
+                return BadRequest(response);
+               
+            }
         }
+
         [HttpPut("{idGenero:int}")]
-        public ActionResult Put(int idGenero, Generos genre)
+        public async Task<IActionResult> Put(int idGenero, Generos genre)
         {
-            repositorio.Update(idGenero,genre);
-            return Ok();
+            var response = new BaseResponse();
+            try
+            {
+                await repositorio.Update(idGenero, genre);
+                response.Succes = true;
+                logger.LogInformation($"Se actualizo correctamente el genero musical con id : {idGenero}");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = $"Ocurrio un error al actualizar el genero musical con id : {idGenero}";
+                logger.LogError($"{response.ErrorMessage} -  {ex.Message}");
+                return BadRequest(response);
+                
+            }
         }
 
         [HttpDelete("{idGenero:int}")]
-        public ActionResult Delete(int idGenero)
+        public async Task<IActionResult> Delete(int idGenero)
         {
-            repositorio.Delete(idGenero);
-            return Ok();
+            var response = new BaseResponse();
+            try
+            {
+                await repositorio.Delete(idGenero);
+                response.Succes = true;
+                logger.LogInformation($"Se elimino correctamente el genero musical con id : {idGenero}");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = $"Hubo un problema al eliminar el genero musical con id : {idGenero}";
+                logger.LogError($" {response.ErrorMessage} - {ex.Message}");
+                return BadRequest(response);
+
+            }
         }
 
 
