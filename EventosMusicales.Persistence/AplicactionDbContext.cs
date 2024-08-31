@@ -4,6 +4,7 @@ using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,11 +23,12 @@ namespace EventosMusicales.Persistence
         {
             base.OnModelCreating(modelbuilder);
 
-            //Definiir la migracion de clase a tabla
-            modelbuilder.Entity<Generos>().Property(x => x.Name).HasMaxLength(100);
+            //Definiir la migracion de clase a tabla : Code First Approach
+            // modelbuilder.Entity<Generos>().Property(x => x.Name).HasMaxLength(100);
+            modelbuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         //Entidades a Tablas
-        public DbSet<Generos> GenerosMusicales { get; set; }
+       // public DbSet<Generos> GenerosMusicales { get; set; }
 
 
     }

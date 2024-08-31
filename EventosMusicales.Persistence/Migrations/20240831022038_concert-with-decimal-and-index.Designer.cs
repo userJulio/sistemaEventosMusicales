@@ -4,6 +4,7 @@ using EventosMusicales.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventosMusicales.Persistence.Migrations
 {
     [DbContext(typeof(AplicactionDbContext))]
-    partial class AplicactionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240831022038_concert-with-decimal-and-index")]
+    partial class concertwithdecimalandindex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
