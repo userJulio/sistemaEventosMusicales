@@ -1,13 +1,15 @@
 ﻿using EventosMusicales.Entities;
+using EventosMusicales.Dto.Request;
+using EventosMusicales.Dto.Response;
 
 namespace EventosMusicales.Repositories
 {
     public interface IGeneroRepositorio
     {
-        Task<int> Add(Generos gener);
+        Task<int> Add(GeneroRequestDto gener);
         Task Delete(int id);
-        Task<List<Generos>> GetGeneros();
-        Task<Generos?> GetGeneros(int id);
-        Task Update(int id, Generos genre);
+        Task<List<GeneroResponseDto>> GetGeneros();
+        Task<GeneroResponseDto?> GetGeneros(int id);
+        Task Update(int id, GeneroRequestDto genero);
     }
 }

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventosMusicales.Entities
+namespace EventosMusicales.Dto.Response
 {
-    public class Generos:EntityBase
+    public class GeneroResponseDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = default!;
+        public bool Estado { get; set; } = true;
     }
 }

@@ -1,4 +1,5 @@
-﻿using EventosMusicales.Dto.Response;
+﻿using EventosMusicales.Dto.Request;
+using EventosMusicales.Dto.Response;
 using EventosMusicales.Entities;
 using EventosMusicales.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace EventosMusicales.Controllers
         public async Task<IActionResult> Get()
         {
 
-            var response = new BaseResponseGeneric<IEnumerable<Generos>>();
+            var response = new BaseResponseGeneric<IEnumerable<GeneroResponseDto>>();
             try
             {
                 response.data= await repositorio.GetGeneros();
@@ -45,7 +46,7 @@ namespace EventosMusicales.Controllers
         [HttpGet("{idGenero:int}")]
         public async Task<IActionResult> GetId(int idGenero)
         {
-            var response =new BaseResponseGeneric<Generos>();
+            var response =new BaseResponseGeneric<GeneroResponseDto>();
 
             try
             {
@@ -64,15 +65,15 @@ namespace EventosMusicales.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Agregar(Generos genero)
+        public async Task<IActionResult> Agregar(GeneroRequestDto generorequestDTO)
         {
             var response = new BaseResponseGeneric<int>();
 
             try
             {
-               response.data= await repositorio.Add(genero);
+               response.data= await repositorio.Add(generorequestDTO);
                 response.Succes = true;
-                logger.LogInformation($"Genero musical inserta correctamente con el id : {response.data}");
+                logger.LogInformation($"Genero musical insertado correctamente con el id : {response.data}");
                 //return Ok(response);
                 return StatusCode((int)HttpStatusCode.Created, response);
             }
@@ -86,12 +87,12 @@ namespace EventosMusicales.Controllers
         }
 
         [HttpPut("{idGenero:int}")]
-        public async Task<IActionResult> Put(int idGenero, Generos genre)
+        public async Task<IActionResult> Put(int idGenero, GeneroRequestDto genrequestDTO)
         {
             var response = new BaseResponse();
             try
             {
-                await repositorio.Update(idGenero, genre);
+                await repositorio.Update(idGenero, genrequestDTO);
                 response.Succes = true;
                 logger.LogInformation($"Se actualizo correctamente el genero musical con id : {idGenero}");
                 return Ok(response);

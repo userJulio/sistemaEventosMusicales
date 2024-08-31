@@ -1,4 +1,6 @@
-﻿using EventosMusicales.Entities;
+﻿	using EventosMusicales.Dto.Request;
+using EventosMusicales.Dto.Response;
+using EventosMusicales.Entities;
 using EventosMusicales.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,77 +25,98 @@ namespace EventosMusicales.Repositories
             this.context = context;
         }
 
-        public async Task<List<Generos>> GetGeneros()
+        public async Task<List<GeneroResponseDto>> GetGeneros()
         {
-            return await context.GenerosMusicales.ToListAsync();
+
+            var items = await context.GenerosMusicales.ToListAsync();
+            //List<GeneroResponseDto> listaresponse = new List<GeneroResponseDto>();
+            //foreach (var item in items) {
+            //    listaresponse.Add(new GeneroResponseDto() {
+            //        Id=item.Id ,
+            //        Name=item.Name,
+            //        Estado=item.Estado 
+            //    });          
+            //}
+
+            var listadto = items.Select(x => new GeneroResponseDto { 
+                Id = x.Id, 
+                Name = x.Name,
+                Estado = x.Estado }).ToList();
+
+            return listadto;
         }
 
-        public async Task<Generos?> GetGeneros(int id)
+        public async Task<GeneroResponseDto?> GetGeneros(int id)
         {
             // El ? puede devolver un objeto genero o un nulo.
             //var item = listGeneros.FirstOrDefault(x => x.Id == id);
             //return item;
+
+
             var item = await context.GenerosMusicales.FirstOrDefaultAsync(x => x.Id == id);
-            if(item is not null)
+            GeneroResponseDto generodto = new GeneroResponseDto();
+            if (item is not null)
             {
-                return item;
+                //mapping
+
+                generodto.Id = item.Id;
+                generodto.Name = item.Name;
+                generodto.Estado = item.Estado;
             }
             else
             {
                 throw new InvalidOperationException($"No se encontro el registro con id : {id}");
             }
+            return generodto;
         }
-        public async Task<int> Add(Generos gener)
+        public async Task<int> Add(GeneroRequestDto geneRequestDto)
         {
             //var lastItem = listGeneros.MaxBy(x => x.Id);
             //gener.Id = lastItem is null ? 1 : lastItem.Id + 1;
             //listGeneros.Add(gener);
             //return gener;
-            context.GenerosMusicales.Add(gener);
-            await context.SaveChangesAsync();
-            return gener.Id;
-        }
-        public async Task Update(int id, Generos genre)
-        {
-            //var item = GetGeneros(id);
-            //if (item is not null)
-            //{
-            //    item.Name = genre.Name;
-            //    item.Estado = genre.Estado;
-            //}else
-            //{
+            var generoMusical = new Generos()
+            {
+                Name = geneRequestDto.Name,
+                Estado = geneRequestDto.Estado
+            };
 
-            //}
-            var item = await GetGeneros(id);
+
+            context.GenerosMusicales.Add(generoMusical);
+            await context.SaveChangesAsync();
+            return generoMusical.Id;
+        }
+        public async Task Update(int id, GeneroRequestDto generRequestDto)
+        {
+            var item = await context.GenerosMusicales.FirstOrDefaultAsync(x => x.Id == id);
+
             if (item is not null)
             {
-                item.Name = genre.Name;
-                item.Estado = genre.Estado;
+                item.Name = generRequestDto.Name;
+                item.Estado = generRequestDto.Estado;
                 context.Update(item);
                 await context.SaveChangesAsync();
             }
             else
             {
-                throw new InvalidOperationException($"No se actualizo el genero musical con id :{id}");
+                throw new InvalidOperationException($"No se actualizo el genero musical");
             }
 
 
         }
         public async Task Delete(int id)
         {
-            //var item = GetGeneros(id);
-            //if (item is not null)
-            //{
-            //    listGeneros.Remove(item);
-            //}
-            var item = await GetGeneros(id);
+            var item = await context.GenerosMusicales.FirstOrDefaultAsync(x => x.Id == id);
             if (item is not null)
             {
+
+
                 context.GenerosMusicales.Remove(item);
                 await context.SaveChangesAsync();
             }
-            else{
-                throw new InvalidOperationException($"No se elimino el género musical con id :{id}");
+            else
+            {
+                throw new InvalidOperationException($"No se elimino el género musical ");
             }
 
         }
