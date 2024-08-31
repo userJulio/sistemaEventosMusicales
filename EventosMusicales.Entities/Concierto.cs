@@ -9,7 +9,8 @@ namespace EventosMusicales.Entities
 {
    public class Concierto:EntityBase
     {
-       
+
+        public int Prueba { get; set; } = 8992;
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string Place { get; set; } = default!;
