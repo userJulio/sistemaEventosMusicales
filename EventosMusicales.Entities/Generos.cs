@@ -9,7 +9,6 @@ namespace EventosMusicales.Entities
 {
     public class Generos:EntityBase
     {
-        public int Prueba2 { get; set; } = 1;
         public string Name { get; set; } = default!;
     }
 }
