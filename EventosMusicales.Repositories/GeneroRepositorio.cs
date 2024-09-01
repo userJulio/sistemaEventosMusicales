@@ -14,8 +14,9 @@ namespace EventosMusicales.Repositories
 {
     public class GeneroRepositorio : ReposotoryBase<Generos>, IGeneroRepositorio
     {
-        public GeneroRepositorio(DbContext db) : base(db)
+        public GeneroRepositorio(AplicactionDbContext db) : base(db)
         {
+
         }
     }
 }

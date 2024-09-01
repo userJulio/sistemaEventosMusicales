@@ -10,30 +10,30 @@ using System.Threading.Tasks;
 
 namespace EventosMusicales.Repositories
 {
-    public class ReposotoryBase<TEntity> :  IReposotoryBase<TEntity> where TEntity : EntityBase
+    public abstract class ReposotoryBase<TEntity> :  IReposotoryBase<TEntity> where TEntity : EntityBase
     {
 
-        private readonly DbContext db;
+        protected readonly DbContext context;
 
-        public ReposotoryBase(DbContext db)
+        protected ReposotoryBase(DbContext db)
         {
-            this.db = db;
+            this.context = db;
         }
 
-        public async Task<ICollection<TEntity>> GetAsync()
+        public virtual async Task<ICollection<TEntity>> GetAsync()
         {
             //AsNoTracking hace mas rapido el get
-            return await db.Set<TEntity>().AsNoTracking().ToListAsync();
+            return await context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
         public async Task<ICollection<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await db.Set<TEntity>().Where(predicate).AsNoTracking().ToListAsync();
+            return await context.Set<TEntity>().Where(predicate).AsNoTracking().ToListAsync();
         }
         public async Task<ICollection<TEntity>> GetAsync<Tkey>(Expression<Func<TEntity, bool>> predicate,
                                                                 Expression<Func<TEntity, Tkey>> orderby)
         {
-            return await db.Set<TEntity>().
+            return await context.Set<TEntity>().
                 Where(predicate).
                 OrderBy(orderby).
                 AsNoTracking().
@@ -41,17 +41,17 @@ namespace EventosMusicales.Repositories
         }
         public async Task<TEntity?> GetAsync(int id)
         {
-            return await db.Set<TEntity>().FindAsync(id);
+            return await context.Set<TEntity>().FindAsync(id);
         }
         public async Task<int> AddAsync(TEntity entity)
         {
-            await db.Set<TEntity>().AddAsync(entity);
-            await db.SaveChangesAsync();
+            await context.Set<TEntity>().AddAsync(entity);
+            await context.SaveChangesAsync();
             return entity.Id;
         }
         public async Task UpdateAsync()
         {
-            await db.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         public async Task DeleteAsync(int id)
         {

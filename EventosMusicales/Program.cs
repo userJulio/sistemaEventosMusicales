@@ -20,8 +20,8 @@ builder.Services.AddDbContext<AplicactionDbContext>(options =>
 
 
 //Registrar Servicios del controlador
-builder.Services.AddTransient<IGeneroRepositorio,GeneroRepositorio>();
-
+builder.Services.AddScoped<IGeneroRepositorio,GeneroRepositorio>();
+builder.Services.AddScoped<IConciertoRepository,ConciertoRepository>();
 
 var app = builder.Build();
 

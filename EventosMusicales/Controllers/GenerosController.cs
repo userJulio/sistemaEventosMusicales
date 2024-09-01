@@ -24,10 +24,19 @@ namespace EventosMusicales.Controllers
         public async Task<IActionResult> Get()
         {
 
-            var response = new BaseResponseGeneric<IEnumerable<GeneroResponseDto>>();
+            var response = new BaseResponseGeneric<ICollection<GeneroResponseDto>>();
             try
             {
-                response.data= await repositorio.GetGeneros();
+                //MAPPING
+                var generos = await repositorio.GetAsync();
+                var generosResponseDto = generos.Select(x => new GeneroResponseDto()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Estado = x.Estado
+                }).ToList();
+
+                response.data = generosResponseDto;
                 response.Succes = true;
                 logger.LogInformation("Obteniendo todos los generos musicales");
                 return Ok(response);
@@ -50,10 +59,31 @@ namespace EventosMusicales.Controllers
 
             try
             {
-                response.data= await repositorio.GetGeneros(idGenero);
-                response.Succes = true;
-                logger.LogInformation($"Obtener el genero musical con el id : {idGenero}");
+                var generos= await repositorio.GetAsync(idGenero);
+               
+                if (generos is null)
+                {
+                    logger.LogWarning($"El genero musical con el id {idGenero} no se encontro");
+                    response.ErrorMessage = "No se encontrol el genero";
+                    return NotFound(response);
+                }
+                else
+                {
+                    var generesponseDto = new GeneroResponseDto()
+                    {
+                        Id = generos.Id,
+                        Name = generos.Name,
+                        Estado = generos.Estado
+                    };
+                    response.data = generesponseDto;
+                    response.Succes = true;
+                    logger.LogInformation($"Obtener el genero musical con el id : {idGenero}");
+                    
+
+                }
                 return Ok(response);
+
+
             }
             catch (Exception ex)
             {
@@ -71,7 +101,13 @@ namespace EventosMusicales.Controllers
 
             try
             {
-               response.data= await repositorio.Add(generorequestDTO);
+                var genero = new Generos()
+                {
+                    Name=generorequestDTO.Name,
+                    Estado=generorequestDTO.Estado
+                };
+
+               response.data= await repositorio.AddAsync(genero);
                 response.Succes = true;
                 logger.LogInformation($"Genero musical insertado correctamente con el id : {response.data}");
                 //return Ok(response);
@@ -92,7 +128,16 @@ namespace EventosMusicales.Controllers
             var response = new BaseResponse();
             try
             {
-                await repositorio.Update(idGenero, genrequestDTO);
+                var generoDb= await repositorio.GetAsync(idGenero);
+                if(generoDb is null)
+                {
+                    response.ErrorMessage = "No se encontro el registro";
+                    return NotFound(response);
+                }
+                generoDb.Name=genrequestDTO.Name;
+                generoDb.Estado = genrequestDTO.Estado;
+
+                await repositorio.UpdateAsync();
                 response.Succes = true;
                 logger.LogInformation($"Se actualizo correctamente el genero musical con id : {idGenero}");
                 return Ok(response);
@@ -112,7 +157,14 @@ namespace EventosMusicales.Controllers
             var response = new BaseResponse();
             try
             {
-                await repositorio.Delete(idGenero);
+                var generoDb = await repositorio.GetAsync(idGenero);
+                if (generoDb is null)
+                {
+                    response.ErrorMessage = "No se encontro el registro";
+                    return NotFound(response);
+                }
+
+                await repositorio.DeleteAsync(idGenero);
                 response.Succes = true;
                 logger.LogInformation($"Se elimino correctamente el genero musical con id : {idGenero}");
                 return Ok(response);
