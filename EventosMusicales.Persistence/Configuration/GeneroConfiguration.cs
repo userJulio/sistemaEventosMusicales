@@ -20,6 +20,8 @@ namespace EventosMusicales.Persistence.Configuration
             //Agrega la tabla generos al esquema musicales
             builder.ToTable(nameof(Generos), "Musicales");
 
+            //Global query filter : para que solo se muestren lo generos con estado activo
+            builder.HasQueryFilter(x => x.Estado);
         }
     }
 }

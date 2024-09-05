@@ -11,5 +11,6 @@ namespace EventosMusicales.Repositories
         //Task<List<GeneroResponseDto>> GetGeneros();
         //Task<GeneroResponseDto?> GetGeneros(int id);
         //Task Update(int id, GeneroRequestDto genero);
+        Task<ICollection<Generos>> GetGeneros(string? title);
     }
 }

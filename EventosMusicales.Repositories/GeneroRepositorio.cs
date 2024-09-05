@@ -14,8 +14,19 @@ namespace EventosMusicales.Repositories
 {
     public class GeneroRepositorio : ReposotoryBase<Generos>, IGeneroRepositorio
     {
-        public GeneroRepositorio(AplicactionDbContext db) : base(db)
+        public GeneroRepositorio(AplicactionDbContext context) : base(context)
         {
+
+        }
+
+        public async Task<ICollection<Generos>> GetGeneros(string? title)
+        {
+            var listaGeneros = await context.Set<Generos>().
+                Where(x => x.Name.Contains(title ?? string.Empty))
+                .AsNoTracking()
+                .ToListAsync();
+
+            return listaGeneros;
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using EventosMusicales.Entities;
+using EventosMusicales.Entities.Info;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System;
@@ -26,9 +27,19 @@ namespace EventosMusicales.Persistence
             //Definiir la migracion de clase a tabla : Code First Approach
             // modelbuilder.Entity<Generos>().Property(x => x.Name).HasMaxLength(100);
             modelbuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelbuilder.Entity<ConciertoInfo>().HasNoKey();  //Para que no se cree como tabla en sql
         }
         //Entidades a Tablas
-       // public DbSet<Generos> GenerosMusicales { get; set; }
+        // public DbSet<Generos> GenerosMusicales { get; set; }
+
+        //configuracion para usar lazi loading
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseLazyLoadingProxies();  //habilita los proxies para utilizar lazi loading
+            }
+        }
 
 
     }

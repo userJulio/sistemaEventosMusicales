@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales.Repositori
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales.Persistence", "EventosMusicales.Persistence\EventosMusicales.Persistence.csproj", "{2F35359B-B94F-486C-9645-6216C860555A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosMusicales.Dto", "EventosMusicales.Dto\EventosMusicales.Dto.csproj", "{3F0A5E13-E91E-43C5-8716-8DA382539454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosMusicales.Dto", "EventosMusicales.Dto\EventosMusicales.Dto.csproj", "{3F0A5E13-E91E-43C5-8716-8DA382539454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosMusicales.Services", "EventosMusicales.Services\EventosMusicales.Services.csproj", "{8EE465CE-CB71-4347-89F1-D5B2AF766090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F0A5E13-E91E-43C5-8716-8DA382539454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EE465CE-CB71-4347-89F1-D5B2AF766090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EE465CE-CB71-4347-89F1-D5B2AF766090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EE465CE-CB71-4347-89F1-D5B2AF766090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EE465CE-CB71-4347-89F1-D5B2AF766090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,6 +25,7 @@
     <ProjectReference Include="..\EventosMusicales.Dto\EventosMusicales.Dto.csproj" />
     <ProjectReference Include="..\EventosMusicales.Persistence\EventosMusicales.Persistence.csproj" />
     <ProjectReference Include="..\EventosMusicales.Repositories\EventosMusicales.Repositories.csproj" />
+    <ProjectReference Include="..\EventosMusicales.Services\EventosMusicales.Services.csproj" />
   </ItemGroup>
 
 </Project>

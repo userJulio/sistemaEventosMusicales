@@ -21,6 +21,6 @@ namespace EventosMusicales.Entities
         public bool Finalized { get; set; }
         //Navigation properties : Propiedades de Navegacion para hacer Foreingkey
      
-        public Generos Genre { get; set; } = default!;
+        public virtual  Generos Genre { get; set; } = default!;
     }
 }

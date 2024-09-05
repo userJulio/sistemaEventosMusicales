@@ -15,9 +15,9 @@ namespace EventosMusicales.Repositories
 
         protected readonly DbContext context;
 
-        protected ReposotoryBase(DbContext db)
+        protected ReposotoryBase(DbContext context)
         {
-            this.context = db;
+            this.context = context;
         }
 
         public virtual async Task<ICollection<TEntity>> GetAsync()

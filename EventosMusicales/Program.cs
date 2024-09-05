@@ -1,6 +1,9 @@
 using EventosMusicales.Controllers;
 using EventosMusicales.Persistence;
 using EventosMusicales.Repositories;
+using EventosMusicales.Services.Implemetation;
+using EventosMusicales.Services.Interface;
+using EventosMusicales.Services.Profiles;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +25,15 @@ builder.Services.AddDbContext<AplicactionDbContext>(options =>
 //Registrar Servicios del controlador
 builder.Services.AddScoped<IGeneroRepositorio,GeneroRepositorio>();
 builder.Services.AddScoped<IConciertoRepository,ConciertoRepository>();
+builder.Services.AddScoped<IConciertoService, ConciertoService>();
+builder.Services.AddScoped<IGeneroService, GeneroService>();
+//Configurando el automapper  : Agrgar perfiles de mappeo
+builder.Services.AddAutoMapper(configure =>
+{
+    configure.AddProfile<ConciertoProfile>();
+    configure.AddProfile<GeneroProfile>();
+
+});
 
 var app = builder.Build();
 
