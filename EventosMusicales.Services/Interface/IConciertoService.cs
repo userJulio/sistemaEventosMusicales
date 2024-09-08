@@ -10,7 +10,7 @@ namespace EventosMusicales.Services.Interface
 {
     public interface IConciertoService
     {
-        Task<BaseResponseGeneric<ICollection<ConciertoResponseDto>>> GetAsync(string? title);
+        Task<BaseResponseGeneric<ICollection<ConciertoResponseDto>>> GetAsync(string? title,PaginationDto paginationDto);
         Task<BaseResponseGeneric<ConciertoResponseDto>> GetAsync(int id);
 
         Task<BaseResponseGeneric<int>> Addasync(ConciertoRequestDto requestDto);

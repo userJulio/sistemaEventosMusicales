@@ -1,4 +1,5 @@
-﻿using EventosMusicales.Dto.Response;
+﻿using EventosMusicales.Dto.Request;
+using EventosMusicales.Dto.Response;
 using EventosMusicales.Entities;
 using EventosMusicales.Entities.Info;
 using System;
@@ -13,7 +14,7 @@ namespace EventosMusicales.Repositories
     {
         Task<ICollection<ConciertoInfo>> GetAsync(string? title);
 
-        Task<ICollection<ConciertoInfo>> getDataConcert(string? title);
+        Task<ICollection<ConciertoInfo>> getDataConcert(string? title,PaginationDto paginationDto);
 
         Task FinalizeAsync(int id);
 

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EventosMusicales.Dto\EventosMusicales.Dto.csproj" />
     <ProjectReference Include="..\EventosMusicales.Entities\EventosMusicales.Entities.csproj" />
     <ProjectReference Include="..\EventosMusicales.Persistence\EventosMusicales.Persistence.csproj" />

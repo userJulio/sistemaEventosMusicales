@@ -20,9 +20,9 @@ namespace EventosMusicales.Controllers
         }
 
         [HttpGet("SearchByTitle")]
-        public async Task<IActionResult> GetResponse(string? title)
+        public async Task<IActionResult> GetResponse(string? title, [FromQuery] PaginationDto paginationDto)
         {
-            var response = await serviceConcierto.GetAsync(title);
+            var response = await serviceConcierto.GetAsync(title, paginationDto);
             return response.Succes ? Ok(response) : BadRequest(response);
         }
 

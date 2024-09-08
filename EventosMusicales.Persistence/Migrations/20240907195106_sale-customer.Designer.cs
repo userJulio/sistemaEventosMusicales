@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventosMusicales.Persistence.Migrations
 {
     [DbContext(typeof(AplicactionDbContext))]
-    [Migration("20240831022038_concert-with-decimal-and-index")]
-    partial class concertwithdecimalandindex
+    [Migration("20240907195106_sale-customer")]
+    partial class salecustomer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,33 @@ namespace EventosMusicales.Persistence.Migrations
                     b.ToTable("Concierto", "Musicales");
                 });
 
+            modelBuilder.Entity("EventosMusicales.Entities.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customer", "Musicales");
+                });
+
             modelBuilder.Entity("EventosMusicales.Entities.Generos", b =>
                 {
                     b.Property<int>("Id")
@@ -103,6 +130,49 @@ namespace EventosMusicales.Persistence.Migrations
                     b.ToTable("Generos", "Musicales");
                 });
 
+            modelBuilder.Entity("EventosMusicales.Entities.Venta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConcertId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaVenta")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("NumeroOperacion")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<short>("Quantity")
+                        .HasColumnType("smallint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConcertId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Venta", "Musicales");
+                });
+
             modelBuilder.Entity("EventosMusicales.Entities.Concierto", b =>
                 {
                     b.HasOne("EventosMusicales.Entities.Generos", "Genre")
@@ -112,6 +182,25 @@ namespace EventosMusicales.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("EventosMusicales.Entities.Venta", b =>
+                {
+                    b.HasOne("EventosMusicales.Entities.Concierto", "concierto")
+                        .WithMany()
+                        .HasForeignKey("ConcertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventosMusicales.Entities.Customer", "customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("concierto");
+
+                    b.Navigation("customer");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,7 +1,10 @@
-﻿using EventosMusicales.Dto.Response;
+﻿using EventosMusicales.Dto.Request;
+using EventosMusicales.Dto.Response;
 using EventosMusicales.Entities;
 using EventosMusicales.Entities.Info;
 using EventosMusicales.Persistence;
+using EventosMusicales.Repositories.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,9 +17,11 @@ namespace EventosMusicales.Repositories
 {
     public class ConciertoRepository : ReposotoryBase<Concierto>, IConciertoRepository
     {
-        public ConciertoRepository(AplicactionDbContext context) : base(context)
-        {
+        private readonly IHttpContextAccessor httpContext;
 
+        public ConciertoRepository(AplicactionDbContext context,IHttpContextAccessor httpContext) : base(context)
+        {
+            this.httpContext = httpContext;
         }
         //Reportes ConciertoInfo
 
@@ -70,10 +75,10 @@ namespace EventosMusicales.Repositories
 
         }
 
-        public async Task<ICollection<ConciertoInfo>> getDataConcert(string? title)
+        public async Task<ICollection<ConciertoInfo>> getDataConcert(string? title,PaginationDto paginationDto)
         {
             //IgnoreQueryFilters() es para que no ignore el query global que tiene el genero
-            var listaConciertoInfo= await  context.Set<Concierto>()
+            var queryableConcert=   context.Set<Concierto>()
                         .Where(x => x.Title.Contains(title ?? string.Empty))
                         .IgnoreQueryFilters()
                         .AsNoTracking()
@@ -90,10 +95,11 @@ namespace EventosMusicales.Repositories
                             ImageUrl = x.ImageUrl,
                             Finalized = x.Finalized,
                             Estado = x.Estado ? "Activo" : "Inactivo"
-                        }).ToListAsync();
+                        }).AsQueryable();
 
+            await httpContext.HttpContext.InsertPaginationHeader(queryableConcert);
+            return await queryableConcert.OrderBy(x=>x.Id).Paginate(paginationDto).ToListAsync();
 
-            return listaConciertoInfo;
             //var query = context.Set<Concierto>()
             //               .FromSqlRaw("usp_ConcertsByTitle {0}", title ?? string.Empty);
             //return await query.ToListAsync();

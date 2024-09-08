@@ -30,12 +30,12 @@ namespace EventosMusicales.Services.Implemetation
             this.mapper = mapper;
             this.generoRepositorio = generoRepositorio;
         }
-        public async Task<BaseResponseGeneric<ICollection<ConciertoResponseDto>>> GetAsync(string? title)
+        public async Task<BaseResponseGeneric<ICollection<ConciertoResponseDto>>> GetAsync(string? title,PaginationDto paginationDto)
         {
             var response = new BaseResponseGeneric<ICollection<ConciertoResponseDto>>();
             try
             {
-                var data= await repositoryConcierto.getDataConcert(title?? string.Empty);
+                var data= await repositoryConcierto.getDataConcert(title?? string.Empty,paginationDto);
 
                 response.data=mapper.Map<ICollection<ConciertoResponseDto>>(data);
                 response.Succes = true;

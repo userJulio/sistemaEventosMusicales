@@ -28,6 +28,9 @@ namespace EventosMusicales.Persistence
             // modelbuilder.Entity<Generos>().Property(x => x.Name).HasMaxLength(100);
             modelbuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelbuilder.Entity<ConciertoInfo>().HasNoKey();  //Para que no se cree como tabla en sql
+            modelbuilder.Ignore<ConciertoInfo>(); //Para que no se migre esa Clase  
+
+
         }
         //Entidades a Tablas
         // public DbSet<Generos> GenerosMusicales { get; set; }
